@@ -5,23 +5,72 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Drag & drop</title>
       <link rel="stylesheet" href="style.css">
+      <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-800">
+
+<body class="bg-gray-100 p-8">
+   <div x-data="{
+       items: [
+           {id: 1, name: 'Classic Burger', img: 'burger1.jpg', price: 13000, desc: 'Nikmati kelezatan burger klasik kami dengan patty daging sapi segar yang dipadukan dengan keju leleh, disajikan dengan sayuran segar dan saus spesial kami.'},
+           {id: 2, name: 'Italian Pizza', img: 'pizza1.jpg', price: 23000, desc: 'Nikmati kelezatan burger klasik kami dengan patty daging sapi segar yang dipadukan dengan keju leleh, disajikan dengan sayuran segar dan saus spesial kami.'},
+           {id: 3, name: 'Kebab Turkey', img: 'kebab1.jpg', price: 33000, desc: 'Nikmati kelezatan burger klasik kami dengan patty daging sapi segar yang dipadukan dengan keju leleh, disajikan dengan sayuran segar dan saus spesial kami.'},
+       ],
+       openModal: null
+   }">
+       <template x-for="(product, index) in items" :key="index">
+           <!-- Product Cards -->
+           <div class="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+               <!-- Card Content -->
+               <img :src="product.img" :alt="product.name + ' Image'" class="w-full h-48 object-cover">
+               <div class="p-4">
+                   <h3 class="text-lg font-semibold mb-2" x-text="product.name"></h3>
+                   <div class="flex items-center mb-2">
+                       <span class="text-yellow-400 mr-1">&#9733;</span>
+                       <span class="text-gray-600">4.5</span>
+                   </div>
+                   <p class="text-gray-700 mb-4" x-text="'$' + product.price.toFixed(2)"></p>
+                   <button @click="openModal = product" class="bg-blue-500 text-white px-4 py-2 rounded-md mr-2">Detail</button>
+                   <button class="bg-green-500 text-white px-4 py-2 rounded-md">Add to Cart</button>
+               </div>
+
+               <!-- Popup -->
+               <div x-show="openModal === product" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-10">
+                   <div class="bg-white rounded-lg shadow-md p-6 max-w-md">
+                       <div class="flex justify-between items-center mb-4">
+                           <h3 class="text-lg font-semibold" x-text="product.name"></h3>
+                           <button @click="openModal = null" class="text-gray-600 hover:text-gray-800">&times;</button>
+                       </div>
+                       <img :src="product.img" :alt="product.name + ' Image'" class="w-full h-48 object-cover mb-4">
+                       <div class="flex items-center mb-2">
+                           <span class="text-yellow-400 mr-1">&#9733;</span>
+                           <span class="text-gray-600">4.5</span>
+                       </div>
+                       <p class="text-gray-700 mb-4" x-text="product.desc"></p>
+                       <button class="bg-green-500 text-white px-4 py-2 rounded-md w-full">Add to Cart</button>
+                   </div>
+               </div>
+           </div>
+       </template>
+   </div>
+
+   <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js"></script>
+</body>
+<!-- <body class="bg-gray-800">
       <div class="container flex justify-center items-center h-screen gap-7 relative">
-         <h1 class="font-sans text-3xl font-semibold text-gray-300 absolute top-20">Drag & Drop</h1>
+         <h1 class="font-sans text-3xl font-semibold text-gray-300 absolute top-20">Drag & Drop</h1> -->
          <!-- Left -->
-         <div id="left" class="bg-transparent border-2 border-gray-300 w-[300px] h-[420px] p-3">
+         <!-- <div id="left" class="bg-transparent border-2 border-gray-300 w-[300px] h-[420px] p-3">
             <div draggable="true" class="list bg-pink-500 mx-auto flex items-center h-16 justify-center my-3 cursor-grab">List item 1</div>
             <div draggable="true" class="list bg-pink-500 mx-auto flex items-center h-16 justify-center my-3 cursor-grab">List item 2</div>
             <div draggable="true" class="list bg-pink-500 mx-auto flex items-center h-16 justify-center my-3 cursor-grab">List item 3</div>
             <div draggable="true" class="list bg-pink-500 mx-auto flex items-center h-16 justify-center my-3 cursor-grab">List item 4</div>
             <div draggable="true" class="list bg-pink-500 mx-auto flex items-center h-16 justify-center my-3 cursor-grab">List item 5</div>
-         </div>
+         </div> -->
          <!-- Right -->
-         <div id="right" class="bg-transparent border-2 border-gray-300 w-[300px] h-[420px] p-3">
+         <!-- <div id="right" class="bg-transparent border-2 border-gray-300 w-[300px] h-[420px] p-3">
          </div>
-      </div>
-      <script>
+      </div> -->
+      <!-- <script>
          let lists = document.getElementsByClassName("list")
          let rightBox = document.getElementById("right")
          let leftBox = document.getElementById("left")  
@@ -47,6 +96,6 @@
                });
             });
          };
-      </script>
+      </script> -->
 </body>
 </html>
